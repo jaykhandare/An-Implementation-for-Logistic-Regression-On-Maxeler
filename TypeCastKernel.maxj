@@ -1,0 +1,36 @@
+/**
+ * Document: MaxCompiler Tutorial (maxcompiler-tutorial.pdf)
+ * Chapter: 6      Example: 1      Name: Typecast
+ * MaxFile name: TypeCast
+ * Summary:
+ *        Kernel that casts from an unsigned int to a float and back.
+ */
+
+package typecast;
+
+import com.maxeler.maxcompiler.v2.kernelcompiler.Kernel;
+import com.maxeler.maxcompiler.v2.kernelcompiler.KernelParameters;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEFloat;
+import com.maxeler.maxcompiler.v2.kernelcompiler.types.base.DFEVar;
+
+class TypeCastKernel extends Kernel {
+
+	TypeCastKernel(KernelParameters parameters) {
+		super(parameters);
+
+		// Type declarations
+		DFEFloat singleType = dfeFloat(8, 24); 
+		// Input
+	        DFEVar mean_x = io.scalarInput("mean_x",singleType);
+	        DFEVar mean_y = io.scalarInput("mean_y",singleType);
+		DFEVar x = io.input("x", singleType);
+		DFEVar y = io.input("y", singleType);
+
+	        DFEVar dev_x2 = (x-mean_x)*(x-mean_x);            
+	        DFEVar dev_xy = (x-mean_x)*(y-mean_y);             
+        
+		// Output
+		io.output("dev_xy", dev_x2, singleType);
+		io.output("dev_x2", dev_xy, singleType);
+	}
+}
